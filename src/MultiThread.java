@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +8,7 @@ class MyRunnable1 implements Runnable {
     private  long startNum;
     private long endNum;
     private int threadNum;
+    public static long totalTime;
 
     MyRunnable1(long num1, long num2, int name) {
         this.startNum = num1;
@@ -29,6 +28,8 @@ class MyRunnable1 implements Runnable {
         System.out.println("写入成功！");
         long endTime = System.currentTimeMillis();
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
+        totalTime += (endTime - startTime);
+        System.out.println("total time is:" + totalTime + "ms");
     }
 }
 
@@ -108,15 +109,11 @@ public class MultiThread {
         long startNum = 1;
         long avg = num/5;
         long endNum = avg;
-
         for (int i=0; i<threadNum; i++) {
-//            String threadName = "线程" + i;
             Thread thread = new Thread(new MyRunnable1(startNum, endNum, i+1));
             thread.start();
             startNum = endNum + 1;
             endNum += avg;
         }
-
-
     }
 }
